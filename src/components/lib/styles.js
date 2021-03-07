@@ -3,9 +3,7 @@ import styled from 'styled-components';
 
 // Start - Body Config
 export const Body = styled.div`
-    display:flex;
-    align-items:center;
-    justify-content:center;
+  
     height:100vh;
     width:100%;
     background-color:white;
@@ -18,12 +16,13 @@ export const Container = styled.div`
     height:auto;
     background-color:white;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
     background-color:#f3f3f3;
     padding-top:30px;
     padding-bottom:30px;  
-`;  
+`;
 
 export const SubContainer = styled.div`
     width:90%;
@@ -46,10 +45,14 @@ export const Card = styled.div`
     justify-content:center;
     background-image:url(${props => props.image});
     border-radius:15px;
-    box-shadow: 5px 5px 0px 0px rgba(25,25,25, 0.1);
+    -webkit-box-shadow: 0px 0px 11px 6px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0px 0px 11px 6px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 11px 6px rgba(0,0,0,0.1);
+
+    border:none;
     cursor:cell;
 
-    @media(min-width:2520px){
+    @media(min-width:2400px){
         width:18%;
         max-width:100%;
     }
