@@ -74,6 +74,55 @@ export const Title = styled.h2`
 export const Description = styled.p`
 
 `;
+
+
+export const NavigateDiv = styled.div`
+   display:flex;
+   padding-top:30px;
+   padding-bottom:10px;
+`;
+
+export const ButtonIndex = styled.button`
+    border-radius:5%;
+    width:30px;
+    height:30px;
+    font-size:12px;
+    color:#323232;
+    border:none;
+    font-weight:bold;
+    margin:0 5px;
+    padding:0;
+    border:solid 2px #323232;
+    transition: 0.5s;
+    outline: none;
+`;
+
+export const ButtonPage = styled.button`
+    background-color:#323232;
+    transition: 0.5s;
+    border-radius:100%;
+    width:30px;
+    padding:0;
+    height:30px;
+    font-size:12px;
+    color:white;
+    border:none;
+    font-weight:bold;
+    margin:0 5px;
+    outline: none;
+    &:hover{
+        transition: 0.5s;
+        background-color:#535353;
+        cursor:pointer;
+    }
+`;
+
+export const ArrowPage = styled.button`
+    border:none;
+    cursor:pointer;
+    outline: none;
+    color:#323232;
+`;
 // End - Card Intes
 
 

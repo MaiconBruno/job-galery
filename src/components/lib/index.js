@@ -1,4 +1,4 @@
-import { Body, Container, Card, SubContainer, Title } from './styles';
+import { Body, Container, Card, SubContainer, Title, ButtonIndex, ButtonPage, NavigateDiv,ArrowPage  } from './styles';
 import { useState } from 'react';
 export default function Library() {
 
@@ -13,6 +13,8 @@ export default function Library() {
             images: [],
         })
     }
+
+    const [PARPAGE, setPARPAGE] = useState(1);
 
     let ACTUAL_PAGE = 1; //VARIAVEL QUE DETERMINA O INDEX DO PAGINA
     const MAX_ITEMS_PERPAGE = 8; // VARIAVEL QUE DETERMINA A QUANTIDADE DE ELEMENTOS RENDERIZADOS 
@@ -31,22 +33,26 @@ export default function Library() {
     const [renderButtons, setRenderButtons] = useState(PAGE_BUTTON.slice(0, 5));
 
 
-    // FUNÇÃO PROXIMO QUE IDENTIFICA A POSICAÇÃO ATUAL DO ELEMENTO E ACRESCENTA UMA NOVO POSIÇÃO ++
+    // //FUNÇÃO PROXIMO QUE IDENTIFICA A POSICAÇÃO ATUAL DO ELEMENTO E ACRESCENTA UMA NOVO POSIÇÃO ++
     // const handleNextPage = () => {
     //     ACTUAL_PAGE++
     //     if (ACTUAL_PAGE > TOTAL_PAGES) { // CASO TENTE AVANÇAR PARA UM VALOR MAIOR QUE O TOTAL DE ITEMS ELE MANTEN NA ULTIMA POSIÇÃO
     //         ACTUAL_PAGE-- //RECUA 1 PÁGINA
+    //         console.log(ACTUAL_PAGE)
     //     } else {
     //         console.log(ACTUAL_PAGE)
     //     }
+
     // }
+
     // const handlePrevPage = () => {
     //     ACTUAL_PAGE--;
     //     if (ACTUAL_PAGE < 1) { // CASO TENTE RECUAR UM ELEMENTO MENOR QUE A PRIMEIRA PÁGINA ELE ACRESCENTA UMA POSIÇÃO MANTENDO NA PRIMEIRA PÁGINA.
     //         ACTUAL_PAGE++ //ACRESCENTA 1 PAGINA. 
+    //         console.log(ACTUAL_PAGE)
     //     } else {
     //         console.log(ACTUAL_PAGE)
-    //     }
+    //     }  
     // }
 
     const handleGoToPage = (page) => { //PARAMETRO PASSADO NA PÁGINA E ATRIBUIDO A VARIAVEL QUE CONTROLA A PÁGINA ATUAL DETERMINANDO ASSIM O INDEX A SER EXIBIDO
@@ -68,13 +74,13 @@ export default function Library() {
         ACTUAL_PAGE = 1;
         handleUpdateList();
         handleUptadeIndexButton();
-      
+
     }
     const handleLastPage = () => {
         ACTUAL_PAGE = TOTAL_PAGES;
         handleUpdateList();
         handleUptadeIndexButton();
-        
+
     }
 
     const handleUpdateList = () => {
@@ -82,30 +88,35 @@ export default function Library() {
         let INIT = INDEX * MAX_ITEMS_PERPAGE;
         let LAST = INIT + MAX_ITEMS_PERPAGE;
         setRenderList(projects.slice(INIT, LAST));
+        setPARPAGE(ACTUAL_PAGE);
+        console.log(PARPAGE);
     }
 
     const handleUptadeIndexButton = () => {
         let MAX_LEFT = ACTUAL_PAGE - Math.floor(MAX_VISIBLE_BUTTONS / 2);
         let MAX_RIGHT = ACTUAL_PAGE + Math.floor(MAX_VISIBLE_BUTTONS / 2);
 
-         if (MAX_LEFT < 1) {
-             MAX_LEFT = 1
-             MAX_RIGHT = MAX_VISIBLE_BUTTONS
-         }
+        if (MAX_LEFT < 1) {
+            MAX_LEFT = 1
+            MAX_RIGHT = MAX_VISIBLE_BUTTONS
+        }
 
-        if (MAX_RIGHT > TOTAL_PAGES){
+        if (MAX_RIGHT > TOTAL_PAGES) {
             MAX_LEFT = TOTAL_PAGES - (MAX_VISIBLE_BUTTONS - 1)
             MAX_RIGHT = TOTAL_PAGES;
             if (MAX_LEFT < 1) {
                 MAX_LEFT = 1;
             }
         }
-        setRenderButtons(PAGE_BUTTON.slice(MAX_LEFT - 1, MAX_RIGHT ))
+        setRenderButtons(PAGE_BUTTON.slice(MAX_LEFT - 1, MAX_RIGHT))
     }
+
     const handleUpdateButtonPage = (data) => {
-        handleGoToPage(data);   
+        handleGoToPage(data);
         handleUptadeIndexButton();
     }
+
+
     // const pageIndex = [];
 
     // const handlePages = () => (Math.ceil(Array.from({ length: pages }).map((_, index) => (
@@ -122,19 +133,20 @@ export default function Library() {
                         </Card>
                     ))}
                 </SubContainer>
-                <div style={{ display: 'flex' }}>
-                    <button onClick={() => handleFirstPage()}>Primeira</button>
-
+                <NavigateDiv>
+                    <ArrowPage onClick={() => handleFirstPage()}>&#9664;&#9664;</ArrowPage>
                     {/* <button onClick={() => handlePrevPage()}>Antes</button> */}
 
                     {renderButtons.map((index) => (
-                        <button onClick={() => handleUpdateButtonPage(index + 1)}>{index + 1}</button>
+                        PARPAGE === index + 1 ?
+                            <ButtonIndex onClick={() => handleUpdateButtonPage(index + 1)}>{index + 1}</ButtonIndex>
+                            :
+                            <ButtonPage onClick={() => handleUpdateButtonPage(index + 1)}>{index + 1}</ButtonPage>
                     ))}
 
                     {/* <button onClick={() => handleNextPage()}>Proxima</button> */}
-
-                    <button onClick={() => handleLastPage()}>Ultima</button>
-                </div>
+                    <ArrowPage onClick={() => handleLastPage()}>&#9654;&#9654;</ArrowPage>
+                </NavigateDiv>
             </Container>
         </Body>
     );
