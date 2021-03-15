@@ -1,4 +1,21 @@
-import { Body, Container, Card, SubContainer, Title, ButtonIndex, ButtonPage, NavigateDiv,ArrowPage  } from './styles';
+import {
+    Body,
+    Container,
+    Card,
+    SubContainer,
+    Title,
+    ButtonIndex,
+    ButtonPage,
+    NavigateDiv,
+    ArrowPage,
+    ModalFrame,
+    BoxContent,
+    BoxImage,
+    BoxModalCard,
+    BoxText,
+    BoxTitle,
+    CloseModalButton,
+} from './styles';
 import { useState } from 'react';
 export default function Library() {
 
@@ -6,13 +23,16 @@ export default function Library() {
 
     for (var i = 0; i < 1000; i++) {
         projects.push({
+            id: `${i + 1}`,
+            type: `MOBILE ${i + 1}`,
             banner: 'https://educacaoinfantil.aix.com.br/wp-content/uploads/2018/03/177959-desenvolvimento-cognitivo-9-praticas-para-a-sala-de-aula.jpg',
-            company: `MCB ${i}`,
-            title: `WEB ${i}`,
+            company: `MCB ${i + 1}`,
+            title: `WEBSITE ${i + 1}`,
             description: 'is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
             images: [],
         })
     }
+
 
     const [PARPAGE, setPARPAGE] = useState(1);
 
@@ -30,7 +50,20 @@ export default function Library() {
 
     const [renderList, setRenderList] = useState(projects.slice(0, 8));
 
+    const [modalStatus, setModalStatus] = useState('hidden');
+    const [objectModal, setObjectModal] = useState(
+        {
+            id: '',
+            type: '',
+            banner: '',
+            company: '',
+            title: '',
+            description: '',
+            images: [],
+        }
+    );
     const [renderButtons, setRenderButtons] = useState(PAGE_BUTTON.slice(0, 5));
+
 
 
     // //FUNÇÃO PROXIMO QUE IDENTIFICA A POSICAÇÃO ATUAL DO ELEMENTO E ACRESCENTA UMA NOVO POSIÇÃO ++
@@ -80,7 +113,6 @@ export default function Library() {
         ACTUAL_PAGE = TOTAL_PAGES;
         handleUpdateList();
         handleUptadeIndexButton();
-
     }
 
     const handleUpdateList = () => {
@@ -116,19 +148,44 @@ export default function Library() {
         handleUptadeIndexButton();
     }
 
-
-    // const pageIndex = [];
-
-    // const handlePages = () => (Math.ceil(Array.from({ length: pages }).map((_, index) => (
-    //     pageIndex.push(index + 1)
-    // ))));
+    const handleModalComponent = (att) => {
+        console.log(att)
+        if (modalStatus === 'hidden') {
+            setObjectModal(
+                {
+                    id: att.id,
+                    type: att.type,
+                    banner: att.banner,
+                    company: att.company,
+                    title: att.title,
+                    description: att.description,
+                    images: att.images,
+                }
+            );
+            setModalStatus('visible');
+        } else {
+            setModalStatus('hidden');
+        }
+    }
 
     return (
         <Body>
+
+            <ModalFrame show={modalStatus}>
+                <CloseModalButton onClick={() => handleModalComponent()}>X</CloseModalButton>
+                <BoxModalCard>
+                    <BoxImage image={objectModal.banner}></BoxImage>
+                    <BoxContent>
+                        <BoxTitle>{objectModal.title}</BoxTitle>
+                        <BoxText>{objectModal.description}</BoxText>
+                    </BoxContent>
+                </BoxModalCard>
+            </ModalFrame>
+
             <Container>
                 <SubContainer>
                     {renderList.map(data => (
-                        <Card key={data.company} image={data.banner}>
+                        <Card onClick={() => handleModalComponent(data)} key={data.company} image={data.banner}>
                             <Title>{data.company}</Title>
                         </Card>
                     ))}
