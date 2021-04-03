@@ -1,5 +1,5 @@
 import {
-    Body,
+    BodyGalery,
     Container,
     Card,
     SubContainer,
@@ -8,15 +8,23 @@ import {
     ButtonPage,
     NavigateDiv,
     ArrowPage,
-    ModalFrame,
+    BtnCLose,
     BoxContent,
-    BoxImage,
-    BoxModalCard,
-    BoxText,
-    BoxTitle,
-    CloseModalButton,
+    BoxContentText,
+    ListTecnology,
+    ListTecnologyLi,
+    // Divider,
+    CssIco,
 } from './styles';
+
+import Modal from 'react-modal';
+
 import { useState } from 'react';
+
+//Icos imports
+import CssIcoUrl from './img/css.png';
+
+
 export default function Library() {
 
     var projects = [];
@@ -30,6 +38,7 @@ export default function Library() {
             title: `WEBSITE ${i + 1}`,
             description: 'is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
             images: [],
+            tecnology: [],
         })
     }
 
@@ -37,7 +46,7 @@ export default function Library() {
     const [PARPAGE, setPARPAGE] = useState(1);
 
     let ACTUAL_PAGE = 1; //VARIAVEL QUE DETERMINA O INDEX DO PAGINA
-    const MAX_ITEMS_PERPAGE = 8; // VARIAVEL QUE DETERMINA A QUANTIDADE DE ELEMENTOS RENDERIZADOS 
+    const MAX_ITEMS_PERPAGE = 6; // VARIAVEL QUE DETERMINA A QUANTIDADE DE ELEMENTOS RENDERIZADOS 
     const TOTAL_PAGES = Math.ceil(projects.length / MAX_ITEMS_PERPAGE); // VARIAVEL QUE CALCULA O NUMERO DE PAGINAS COM BASE NO NUMERO DE ELEMENTOS ARREDONDANDO PARA CIMA CASO HAJA UM CONDIÇÃO ONDE A DIVISÃO SEJA QUEBRADA É CRIAR UMA NOVA PÁGINA PARA OS ELEMENTOS RESTANTES. 
     const MAX_VISIBLE_BUTTONS = 5;
 
@@ -48,9 +57,9 @@ export default function Library() {
         PAGE_BUTTON.push(index)
     ));
 
-    const [renderList, setRenderList] = useState(projects.slice(0, 8));
+    const [renderList, setRenderList] = useState(projects.slice(0, 6));
 
-    const [modalStatus, setModalStatus] = useState('hidden');
+    const [modalStatus, setModalStatus] = useState(false);
     const [objectModal, setObjectModal] = useState(
         {
             id: '',
@@ -64,6 +73,7 @@ export default function Library() {
     );
     const [renderButtons, setRenderButtons] = useState(PAGE_BUTTON.slice(0, 5));
 
+    console.log(objectModal);
 
 
     // //FUNÇÃO PROXIMO QUE IDENTIFICA A POSICAÇÃO ATUAL DO ELEMENTO E ACRESCENTA UMA NOVO POSIÇÃO ++
@@ -150,7 +160,7 @@ export default function Library() {
 
     const handleModalComponent = (att) => {
         console.log(att)
-        if (modalStatus === 'hidden') {
+        if (modalStatus === false) {
             setObjectModal(
                 {
                     id: att.id,
@@ -162,49 +172,68 @@ export default function Library() {
                     images: att.images,
                 }
             );
-            setModalStatus('visible');
+            setModalStatus(true);
         } else {
-            setModalStatus('hidden');
+            setModalStatus(false);
         }
     }
 
     return (
-        <Body>
+        <>
+            <BodyGalery>
+                <Modal
+                    isOpen={modalStatus}
+                    style={{
+                        overlay: {
+                            backgroundColor: "#232323",
+                        },
+                        content: {
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            borderRadius: "10px",
+                            padding: '0',
+                            height: '100vh',
+                            width: '100%', backgroundColor: "#232323",
+                            transition: 'display 1.8s',
+                            backgroundOpacity: '0.5',
+                            border: 'none',
+                        },
+                    }}
+                >
+                    <BtnCLose onClick={() => handleModalComponent()}>X</BtnCLose>
 
-            <ModalFrame show={modalStatus}>
-                <CloseModalButton onClick={() => handleModalComponent()}>X</CloseModalButton>
-                <BoxModalCard>
-                    <BoxImage image={objectModal.banner}></BoxImage>
-                    <BoxContent>
-                        <BoxTitle>{objectModal.title}</BoxTitle>
-                        <BoxText>{objectModal.description}</BoxText>
-                    </BoxContent>
-                </BoxModalCard>
-            </ModalFrame>
+                </Modal>
+                <BoxContent>
+                    <BoxContentText>
+                       <CssIco src={CssIcoUrl}/>       
+                    </BoxContentText>
+                </BoxContent>
+                <Container>
+                    <SubContainer>
+                        {renderList.map(data => (
+                            <Card onClick={() => handleModalComponent(data)} key={data.company} image={data.banner}>
+                                <Title>{data.company}</Title>
+                            </Card>
+                        ))}
+                    </SubContainer>
+                    <NavigateDiv>
+                        <ArrowPage onClick={() => handleFirstPage()}>&#9664;&#9664;</ArrowPage>
+                        {/* <button onClick={() => handlePrevPage()}>Antes</button> */}
 
-            <Container>
-                <SubContainer>
-                    {renderList.map(data => (
-                        <Card onClick={() => handleModalComponent(data)} key={data.company} image={data.banner}>
-                            <Title>{data.company}</Title>
-                        </Card>
-                    ))}
-                </SubContainer>
-                <NavigateDiv>
-                    <ArrowPage onClick={() => handleFirstPage()}>&#9664;&#9664;</ArrowPage>
-                    {/* <button onClick={() => handlePrevPage()}>Antes</button> */}
+                        {renderButtons.map((index) => (
+                            PARPAGE === index + 1 ?
+                                <ButtonIndex onClick={() => handleUpdateButtonPage(index + 1)}>{index + 1}</ButtonIndex>
+                                :
+                                <ButtonPage onClick={() => handleUpdateButtonPage(index + 1)}>{index + 1}</ButtonPage>
+                        ))}
 
-                    {renderButtons.map((index) => (
-                        PARPAGE === index + 1 ?
-                            <ButtonIndex onClick={() => handleUpdateButtonPage(index + 1)}>{index + 1}</ButtonIndex>
-                            :
-                            <ButtonPage onClick={() => handleUpdateButtonPage(index + 1)}>{index + 1}</ButtonPage>
-                    ))}
+                        {/* <button onClick={() => handleNextPage()}>Proxima</button> */}
+                        <ArrowPage onClick={() => handleLastPage()}>&#9654;&#9654;</ArrowPage>
+                    </NavigateDiv>
+                </Container>
+            </BodyGalery>
 
-                    {/* <button onClick={() => handleNextPage()}>Proxima</button> */}
-                    <ArrowPage onClick={() => handleLastPage()}>&#9654;&#9654;</ArrowPage>
-                </NavigateDiv>
-            </Container>
-        </Body>
+        </>
     );
 }

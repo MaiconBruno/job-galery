@@ -1,27 +1,91 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
+//Color Styles palests
+var Primary = '#333333';
+var Secodary = 'white';
+// var HoverSecondary ='#434343';
+var DangerColor = '#aa0000';
+var DangerHover = '#880000';
 
 // Start - Body Config
-export const Body = styled.div`
-  
-    height:100vh;
+export const BodyGalery = styled.div`
     width:100%;
     background-color:white;
+    display:flex;
+    flex-wrap:wrap;
+    background-size:cover;
+    background-repeat:no-repeat;
+    border-top: solid 5px #333333;
+    border-bottom:solid 5px #333333;
+    background-image: linear-gradient(to right, #2b2b2b , #1a1a1a);
 `;
 // End - Body Config
 
+
+// Start Galery Descripton
+export const BoxContent = styled.div`
+    width:33%;
+    height:auto;
+    padding:0px 50px;
+    padding-top:80px;
+    display:flex;
+    justify-content:center;
+    line-height:1.5;
+    @media(max-width:800px){
+        padding:20px;
+        width:100%;
+        max-width:100%;
+    }
+`;
+
+export const BoxContentText = styled.div`
+  color:white;
+`;
+
+const keyFrameAnimatedIco = keyframes`
+  
+`
+
+export const CssIco = styled.img`
+    transform-style:preserve-3d;
+    width:350px;
+    cursor:pointer;
+    opacity:0.1;
+    animation-name: ${keyFrameAnimatedIco};
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+    &:hover{
+        
+    }
+`;  
+
+export const Divider = styled.div`
+    height:5px;
+    width:50px;
+    border-radius:5px;
+    margin-top:10px;
+    margin-bottom:15px;
+    background-color:${Primary};
+    margin-left:1px;
+`;
+
+
+// End Galery Description 
+
 // Start - Containter cards 
 export const Container = styled.div`
-    width:100%;
+    width:60%;
     height:auto;
-    background-color:white;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    background-color:#f3f3f3;
     padding-top:30px;
     padding-bottom:30px;  
+    @media(max-width:800px){
+        width:100%;
+        max-width:100%;
+    }
 `;
 
 export const SubContainer = styled.div`
@@ -29,15 +93,14 @@ export const SubContainer = styled.div`
     display:flex;
     flex-wrap:wrap;
     flex-direction:row;
-    background-color:#f3f3f3;
     
 `;
 // End - Containter Cards
 
 // Start - Card Intes 
 export const Card = styled.div`
-    max-width:23%;
-    width:23%;
+    max-width:30%;
+    width:30%;
     margin:1%;
     min-height:200px;
     display:flex;
@@ -50,10 +113,10 @@ export const Card = styled.div`
     box-shadow: 0px 0px 11px 6px rgba(0,0,0,0.1);
     outline:none;
     border:none;
-    cursor:cell;
-    transition:0.2s;
+    cursor:pointer;
+    transition:ease-in 0.2s;
     &:hover{
-        transform:scale(0.8);
+        transform:scale(1.2);
         transition:0.2s;
     }
     @media(min-width:2400px){
@@ -91,33 +154,37 @@ export const ButtonIndex = styled.button`
     width:30px;
     height:30px;
     font-size:12px;
-    color:#323232;
+    color:white;
     border:none;
     font-weight:bold;
+    background-color:${Primary};
     margin:0 5px;
     padding:0;
-    border:solid 2px #323232;
     transition: 0.5s;
     outline: none;
+    transition: ease-out 0.8s;
 `;
 
 export const ButtonPage = styled.button`
-    background-color:#323232;
+    background-color:${Secodary};
     transition: 0.5s;
     border-radius:100%;
     width:30px;
     padding:0;
     height:30px;
     font-size:12px;
-    color:white;
+    color:#333333;
     border:none;
     font-weight:bold;
     margin:0 5px;
     outline: none;
+    transition: ease-out 0.5s;
+
     &:hover{
         transition: 0.5s;
-        background-color:#535353;
         cursor:pointer;
+        transition: ease-out 0.5s;
+        border-radius:5%;
     }
 `;
 
@@ -125,76 +192,40 @@ export const ArrowPage = styled.button`
     border:none;
     cursor:pointer;
     outline: none;
-    color:#323232;
+    color:white;
+    font-size:12px;
+    background:none;
 `;
 
-export const ModalFrame = styled.div`
-    height:100vh;
-    width:100%;
-    background-color:rgb(25, 25, 25, 0.5);
-    position:absolute;
-    visibility:${props => props.show};
+
+export const containContentModal = styled.div`
     display:flex;
-    justify-content:center;
-    align-items:center;
+    flex-direction:row;
+    flex-wrap:wrap;
+    background-color:${Secodary};
+    height:100px;
+    width:100%;
 `;
+
 // End - Card Intes
 
 
-//Start - Modal Components
-
-export const CloseModalButton = styled.button`
+export const BtnCLose = styled.button`
+    background-color:${DangerColor};
     border:none;
-    background-color:#ff0000;
     color:white;
-    font-size:15px;
-    font-weight:bold;
-    width:30px;
-    height:30px;
-    position:absolute;
-    top:10%;
-    right:10%;
-    border-radius:5px;
+    padding:5px 10px;
     cursor:pointer;
-    outline:none;
+    font-weight:bold;
+    &:hover{
+      background-color:${DangerHover}
+    }
 `;
 
-export const BoxModalCard = styled.div`
-     background-color:white;
-     width:80%;
-     min-height:60vh;
-     display:flex;
-     border-radius:10px;
-`;
 
-export const BoxImage = styled.div`
-   width:60%;
-   background-image:url(${props => props.image});
-   border-radius: 10px 0px 0px 10px;
-   background-size:cover;
-   background-repeat:no-repeat;
-`;
 
-export const BoxContent = styled.div `
-    background-color:#f3f3f3;
-    min-height:60vh;
-    width:40%;
-    padding:20px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    border-radius: 0px 10px 10px 0px;
-`;
 
-export const BoxTitle = styled.h2 `
-    color:black;
-    font-size:18px;
-`;
-export const BoxText = styled.p`
-    color:black;
-`;
-//End - Modal Components
+
 
 
 
