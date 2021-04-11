@@ -10,11 +10,15 @@ import {
     ArrowPage,
     BtnCLose,
     BoxContent,
-    BoxContentText,
-    ListTecnology,
-    ListTecnologyLi,
+    BoxContentItems,
     // Divider,
+    JavaScriptIco,
+    ReactIco,
+    HtmlIco,
+    WordpressIco,
     CssIco,
+    GaleryText,
+    ContainerTitle,
 } from './styles';
 
 import Modal from 'react-modal';
@@ -23,6 +27,10 @@ import { useState } from 'react';
 
 //Icos imports
 import CssIcoUrl from './img/css.png';
+import HtmlIcoUrl from './img/html.png';
+import JsIcoUrl from './img/js.png';
+import WordpressIcoUrl from './img/wordpress.png';
+import ReactIcoUrl from './img/react.png';
 
 
 export default function Library() {
@@ -33,7 +41,7 @@ export default function Library() {
         projects.push({
             id: `${i + 1}`,
             type: `MOBILE ${i + 1}`,
-            banner: 'https://educacaoinfantil.aix.com.br/wp-content/uploads/2018/03/177959-desenvolvimento-cognitivo-9-praticas-para-a-sala-de-aula.jpg',
+            banner: 'https://i.pinimg.com/564x/76/5f/59/765f59075f3ba1e9623d2c9e9d6ca67e.jpg',
             company: `MCB ${i + 1}`,
             title: `WEBSITE ${i + 1}`,
             description: 'is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
@@ -185,7 +193,7 @@ export default function Library() {
                     isOpen={modalStatus}
                     style={{
                         overlay: {
-                            backgroundColor: "#232323",
+                            backgroundColor: "#242424b5",
                         },
                         content: {
                             display: "flex",
@@ -194,7 +202,8 @@ export default function Library() {
                             borderRadius: "10px",
                             padding: '0',
                             height: '100vh',
-                            width: '100%', backgroundColor: "#232323",
+                            width: '100%',
+                            backgroundColor: "#24242400",
                             transition: 'display 1.8s',
                             backgroundOpacity: '0.5',
                             border: 'none',
@@ -204,10 +213,17 @@ export default function Library() {
                     <BtnCLose onClick={() => handleModalComponent()}>X</BtnCLose>
 
                 </Modal>
+                <ContainerTitle>
+                    <GaleryText>Trabalhos</GaleryText>
+                </ContainerTitle>
                 <BoxContent>
-                    <BoxContentText>
+                    <BoxContentItems> 
                        <CssIco src={CssIcoUrl}/>       
-                    </BoxContentText>
+                       <JavaScriptIco src={JsIcoUrl}/>       
+                       <ReactIco src={ReactIcoUrl}/>       
+                       <WordpressIco src={WordpressIcoUrl}/>       
+                       <HtmlIco src={HtmlIcoUrl}/>       
+                    </BoxContentItems>
                 </BoxContent>
                 <Container>
                     <SubContainer>
@@ -233,7 +249,7 @@ export default function Library() {
                     </NavigateDiv>
                 </Container>
             </BodyGalery>
-
+            <div style={{backgroundColor:'#f2f2f2', width:'100%', height:'300px',}}></div>
         </>
     );
 }
