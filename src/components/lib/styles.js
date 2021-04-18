@@ -31,8 +31,8 @@ export const BoxContent = styled.div`
     display:flex;
     justify-content:center;
     line-height:1.5;
-    
     @media(max-width:800px){
+        display:none;
         padding:20px;
         width:100%;
         max-width:100%;
@@ -43,7 +43,6 @@ export const BoxContentItems = styled.div`
   color:white;
   position:relative;
   width:100%;
-  
   @media(max-width:800px){
  
   }
@@ -66,24 +65,8 @@ const keyFrameAnimatedCard = keyframes` //Animation Key Frame No configured
      }
 `
 
-export const Icos = styled.img`
-    width:100px;
-    cursor:pointer;
-    opacity:0.1;
-    position:absolute;
-    transition: all 0.5s;
-    &:hover{
-        transition: all 0.5s;
-        opacity:1;
-    }
-
-    @media(max-width:800px){
-        position:relative;
-    }
-`;
 
 export const ContainerTitle = styled.div`
-    min-height:30px;
     width:100%;
 `;
 
@@ -98,32 +81,51 @@ export const GaleryText = styled.h2`
     text-align:center;
 `;
 
+
+export const Icos = styled.img`
+    width:100px;
+    cursor:pointer;
+    opacity:0.1;
+    position:absolute;
+    transition: all 0.5s;
+    &:hover{
+        transition: all 0.5s;
+        opacity:1;
+    }
+
+    @media(max-width:800px){
+        position:relative;
+        display:none;
+    }
+`;
+
+
 export const CssIco = styled(Icos)`
-    top:1%;
+    top:-20%;
     left:3%;
     transform: rotate(-20deg);   
 `;
 
 export const HtmlIco = styled(Icos)`
-    top:5%;
+    top:-10%;
     right:5%;
     width:150px;
     transform: rotate(10deg);   
 `;
 export const JavaScriptIco = styled(Icos)`
-    top:80%;
+    top:70%;
     right:60%;
     width:200px;
     transform: rotate(-15deg);   
 `;
 export const ReactIco = styled(Icos)`
-    top:10%;
+    top:-5%;
     right:30%;
     width:400px;
     transform: rotate(-15deg);   
 `;
 export const WordpressIco = styled(Icos)`
-    top:40%;
+    top:30%;
     right:-10%;
     transform: rotate(-30deg);  
     width:350px;
@@ -190,11 +192,10 @@ export const Card = styled.div`
     cursor:pointer;
     transition:ease-in 0.2s;
     &:hover{
-        transform:scale(1.2);
+        transform:scale(1.1);
         transition:0.2s;
         -webkit-filter: sepia(0%);
         animation: ${keyFrameAnimatedCard} 1s alternate infinite ease-in-out; 
-        z-index:1;
     }
     @media(min-width:2400px){
         width:18%;
@@ -204,6 +205,10 @@ export const Card = styled.div`
     @media(max-width:800px){
         width:100%;
         max-width:100%;
+        &:hover{
+         z-index:unset;
+         transform:unset;
+         }
     }
 
 `;
@@ -273,25 +278,37 @@ export const ArrowPage = styled.button`
 `;
 
 
-export const containContentModal = styled.div`
+export const ContainContentModal = styled.div`
     display:flex;
-    flex-direction:row;
     flex-wrap:wrap;
-    background-color:${Secodary};
+    background-color:none;
     height:100px;
-    width:100%;
+    width:70%;
 `;
 
 // End - Card Intes
+export const ContainModalDiveRight = styled.div`
+    width:50%;
+    height:20px;
+    background-color:red;
+`;
 
+export const ContainModalDiveLeft = styled.div`
+    width:50%;
+    height:20px;
+    background-color:blue;
+`;
 
 export const BtnCLose = styled.button`
     background-color:${DangerColor};
     border:none;
     color:white;
+    top:10px;
+    right:5px;
     padding:5px 10px;
     cursor:pointer;
     font-weight:bold;
+    position: absolute;
     &:hover{
       background-color:${DangerHover}
     }

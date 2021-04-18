@@ -11,10 +11,12 @@ import {
     BtnCLose,
     BoxContent,
     BoxContentItems,
-    // Divider,
+    ContainContentModal,
     JavaScriptIco,
     ReactIco,
     HtmlIco,
+    ContainModalDiveLeft,
+    ContainModalDiveRight,
     WordpressIco,
     CssIco,
     GaleryText,
@@ -68,6 +70,7 @@ export default function Library() {
     const [renderList, setRenderList] = useState(projects.slice(0, 6));
 
     const [modalStatus, setModalStatus] = useState(false);
+
     const [objectModal, setObjectModal] = useState(
         {
             id: '',
@@ -167,7 +170,7 @@ export default function Library() {
     }
 
     const handleModalComponent = (att) => {
-        console.log(att)
+        
         if (modalStatus === false) {
             setObjectModal(
                 {
@@ -182,7 +185,7 @@ export default function Library() {
             );
             setModalStatus(true);
         } else {
-            setModalStatus(false);
+            setModalStatus(false);    
         }
     }
 
@@ -190,6 +193,7 @@ export default function Library() {
         <>
             <BodyGalery>
                 <Modal
+                    ariaHideApp={false}
                     isOpen={modalStatus}
                     style={{
                         overlay: {
@@ -202,16 +206,18 @@ export default function Library() {
                             borderRadius: "10px",
                             padding: '0',
                             height: '100vh',
-                            width: '100%',
-                            backgroundColor: "#24242400",
-                            transition: 'display 1.8s',
+                            margin:'0',
+                            backgroundColor: "#24242400",  
                             backgroundOpacity: '0.5',
                             border: 'none',
                         },
                     }}
                 >
                     <BtnCLose onClick={() => handleModalComponent()}>X</BtnCLose>
-
+                    <ContainContentModal>
+                        <ContainModalDiveLeft></ContainModalDiveLeft>
+                        <ContainModalDiveRight></ContainModalDiveRight>
+                    </ContainContentModal>
                 </Modal>
                 <ContainerTitle>
                     <GaleryText>Trabalhos</GaleryText>
@@ -228,7 +234,7 @@ export default function Library() {
                 <Container>
                     <SubContainer>
                         {renderList.map(data => (
-                            <Card onClick={() => handleModalComponent(data)} key={data.company} image={data.banner}>
+                            <Card onClick={() => handleModalComponent(data)} key={data.id} image={data.banner}>
                                 <Title>{data.company}</Title>
                             </Card>
                         ))}
@@ -239,9 +245,9 @@ export default function Library() {
 
                         {renderButtons.map((index) => (
                             PARPAGE === index + 1 ?
-                                <ButtonIndex onClick={() => handleUpdateButtonPage(index + 1)}>{index + 1}</ButtonIndex>
+                                <ButtonIndex key={index + 1} onClick={() => handleUpdateButtonPage(index + 1)}>{index + 1}</ButtonIndex>
                                 :
-                                <ButtonPage onClick={() => handleUpdateButtonPage(index + 1)}>{index + 1}</ButtonPage>
+                                <ButtonPage key={index + 1} o onClick={() => handleUpdateButtonPage(index + 1)}>{index + 1}</ButtonPage>
                         ))}
 
                         {/* <button onClick={() => handleNextPage()}>Proxima</button> */}
